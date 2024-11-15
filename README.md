@@ -1,38 +1,43 @@
-# URL to QR Code Generator 🚀
+# Python URL to QR Generator 🔲
 
-A simple Python script to generate QR codes from URLs.
+Simple and fast Python script to generate QR codes from URLs. Created with clean interface and organized output.
 
-## Features ✨
-- Convert URLs to QR codes 🔲
-- Automatic HTTPS prefix addition if missing
-- Unique filenames with timestamps
-- Clean command line interface
-- Saves QR codes in organized folder structure
+## Features
+- URL to QR Code conversion 🔗
+- Automatic HTTPS handling ✨
+- Clean CLI interface 💻
+- Organized file structure 📁
 
-## Installation 🛠️
+## Setup & Usage
 
+1. Clone repo:
 ```bash
-# Clone the repository
-git clone https://github.com/abhiyanpa/url-to-qr.git
-
-# Install required package
-pip install qrcode
+git clone https://github.com/abhiyanpa/python-qr.git
+cd python-qr
 ```
 
-## Usage 💻
+2. Install requirements:
+```bash
+pip install -r requirements.txt
+```
+
+3. Run script:
 ```bash
 python main.py
 ```
-Then enter your URL when prompted. QR codes will be saved in the `qrcodes` folder.
 
-## Requirements 📦
-- Python 3.x
-- qrcode
-- pillow
+## Requirements
+```
+qrcode==7.4.2
+pillow==10.1.0
+```
 
-## Author ✍️
-**Abhiyan P A**
-- GitHub: [@abhiyanpa](https://github.com/abhiyanpa)
+## Output
+QR codes will be saved in `qrcodes` folder with timestamp and random string.
+Example: `qrcodes/qr_20241115_123456_AbC123Xy.png`
 
-## License 📄
-This project is open source and available under the MIT License.
+## Author
+Made with ❤️ by [Abhiyan P A](https://github.com/abhiyanpa)
+
+## License
+MIT
