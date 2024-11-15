@@ -14,10 +14,18 @@ def print_banner():
     """
     print(banner)
 
-def generate_qr(url):
-    if not url.startswith(('http://', 'https://')):
-        url = 'https://' + url
-    
+def print_menu():
+    menu = """
+    [1] URL QR Code
+    [2] Email QR Code
+    [3] SMS QR Code
+    [4] WiFi QR Code
+    [5] Text QR Code
+    [0] Exit
+    """
+    print(menu)
+
+def generate_qr(data):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -25,7 +33,7 @@ def generate_qr(url):
         border=4,
     )
     
-    qr.add_data(url)
+    qr.add_data(data)
     qr.make(fit=True)
     qr_image = qr.make_image(fill_color="black", back_color="white")
     
@@ -44,28 +52,89 @@ def generate_qr(url):
     
     return os.path.join('qrcodes', filename)
 
+def handle_url():
+    url = input("\n[>] Enter URL: ").strip()
+    if not url.startswith(('http://', 'https://')):
+        url = 'https://' + url
+    return url
+
+def handle_email():
+    email = input("\n[>] Enter Email: ").strip()
+    subject = input("[>] Enter Subject (optional): ").strip()
+    body = input("[>] Enter Message (optional): ").strip()
+    
+    mailto = f"mailto:{email}"
+    if subject or body:
+        params = []
+        if subject:
+            params.append(f"subject={subject}")
+        if body:
+            params.append(f"body={body}")
+        mailto += "?" + "&".join(params)
+    return mailto
+
+def handle_sms():
+    phone = input("\n[>] Enter Phone Number: ").strip()
+    message = input("[>] Enter Message (optional): ").strip()
+    sms = f"sms:{phone}"
+    if message:
+        sms += f"?body={message}"
+    return sms
+
+def handle_wifi():
+    ssid = input("\n[>] Enter WiFi Name (SSID): ").strip()
+    password = input("[>] Enter Password: ").strip()
+    security = input("[>] Security Type (WPA/WEP/none): ").strip().upper() or "WPA"
+    hidden = input("[>] Hidden Network? (y/N): ").strip().lower() == 'y'
+    
+    wifi = f"WIFI:S:{ssid};T:{security};P:{password}"
+    if hidden:
+        wifi += ";H:true"
+    wifi += ";;"
+    return wifi
+
+def handle_text():
+    text = input("\n[>] Enter Text: ").strip()
+    return text
+
 def main():
     print_banner()
-    print("\n[+] Type 'exit' to quit the program")
     print("[+] QR codes will be saved in 'qrcodes' folder")
     
     while True:
         print("\n" + "="*50)
-        url = input("\n[>] Enter URL: ").strip()
+        print_menu()
+        choice = input("\n[>] Select option: ").strip()
         
-        if url.lower() == 'exit':
-            print("\n[+] Thanks for using QR Generator!")
-            print("[+] Created by Abhiyan (github.com/abhiyanpa)")
-            break
+        try:
+            if choice == '0':
+                print("\n[+] Thanks for using QR Generator!")
+                print("[+] Created by Abhiyan (github.com/abhiyanpa)")
+                break
+                
+            handlers = {
+                '1': ('URL', handle_url),
+                '2': ('Email', handle_email),
+                '3': ('SMS', handle_sms),
+                '4': ('WiFi', handle_wifi),
+                '5': ('Text', handle_text)
+            }
             
-        if url:
-            try:
-                filepath = generate_qr(url)
-                print(f"\n[✓] Success! QR Code saved as: {filepath}")
-            except Exception as e:
-                print(f"\n[✗] Error: {str(e)}")
-        else:
-            print("\n[✗] Please enter a valid URL")
+            if choice in handlers:
+                type_name, handler = handlers[choice]
+                data = handler()
+                if data:
+                    filepath = generate_qr(data)
+                    print(f"\n[✓] Success! {type_name} QR Code saved as: {filepath}")
+                else:
+                    print("\n[✗] No data provided")
+            else:
+                print("\n[✗] Invalid option")
+                
+        except Exception as e:
+            print(f"\n[✗] Error: {str(e)}")
+            
+        input("\nPress Enter to continue...")
 
 if __name__ == "__main__":
     try:
