@@ -14,7 +14,8 @@ A Python CLI tool to generate QR codes in multiple formats. Clean interface with
 <img width="434" alt="{C10E7BDC-FB83-4341-A285-E3A750BE3FF7}" src="https://github.com/user-attachments/assets/44949030-bb74-47aa-91e7-0f27c9df6449">
 
 ### WiFi QR Generation
-<img width="453" alt="{FCE31179-E20E-4505-B23A-61D419C17474}" src="https://github.com/user-attachments/assets/e1bd0424-50f0-4827-b2a1-fbc5ec7971d3">
+<img width="438" alt="{445C3324-54B0-4E57-9032-7BDFD1CFC8C1}" src="https://github.com/user-attachments/assets/ce012783-1011-4478-b972-1fabbd22650a">
+
 
 </details>
 
